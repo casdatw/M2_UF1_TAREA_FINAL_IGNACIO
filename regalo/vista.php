@@ -131,10 +131,8 @@
 </body>
 </html>
 <?php
-require_once './models/Empleado_nuevo.php';
-require_once './models/Empleado_normal.php';
-require_once './models/Empleado_honor.php';
-
+require_once './Empleado_nuevo.php';
+require_once './vista.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $enviar = isset($_GET['enviar']) ? htmlspecialchars(trim($_GET['enviar'])) : "";
@@ -151,20 +149,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
         $empleados = [$empleado1, $empleado2, $empleado3, $empleado4, $empleado5];
         $j = 0;
-        for ($i = 0; $i < sizeof($empleados); $i++) {
-            $empleado = $empleados[$i];
-            if (strcmp($empleado->getNombre(),$nombre) == 0 && strcmp($empleado->getApellido(),$apellidos) == 0) {
-                    echo "<script>alert('¡Feliz Navidad $nombre $apellidos! Al ser un empleado con ". $empleado->getAntiguedad()."años de antiguedad, te corresponde de regalo un " . $empleado->getRegalo() . "¡¡¡FELICIDADES!!!');</script>";
-                    $j++; 
-            }else if($j == 0 && $i+1 == sizeof($empleados)){
-                echo "<script>alert('No tenemos registros de ningún empleado con ese nombre y apellidos.')</script>";
-            } 
-        }
         if($nombre == '' || $apellidos == '' ){
             echo "<script>alert('Debes completar todos los campos')</script>";
-        }  
-
+        }else{ 
+            for ($i = 0; $i < sizeof($empleados); $i++) {
+                $empleado = $empleados[$i];
+                if (strcmp($empleado->getNombre(),$nombre) == 0 && strcmp($empleado->getApellido(),$apellidos) == 0) {
+                        echo "<script>alert('¡Feliz Navidad $nombre $apellidos! Al ser un empleado con ". $empleado->getAntiguedad()."años de antiguedad, te corresponde de regalo un " . $empleado->getRegalo() . "¡¡¡FELICIDADES!!!');</script>";
+                        $j++; 
+                }else if($j == 0 && $i+1 == sizeof($empleados)){
+                    echo "<script>alert('No tenemos registros de ningún empleado con ese nombre y apellidos.')</script>";
+                } 
+            }
+        }
     }
 }
-
 ?>
